@@ -13,11 +13,17 @@ import java.io.IOException;
 import dao.UserAccess;
 import dao.UserDAO;
 
+/**
+ * Servlet RegistrarServlet que maneja las peticiones a la ruta "/registrarse".
+ */
 @WebServlet("/registrarse")
 public class RegistrarServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	
+	/**
+	 * Método doGet que se ejecuta al recibir una petición GET.
+	 * Este método se encarga de redirigir al usuario a la página de login.
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		RequestDispatcher dispatcher = null;
@@ -25,13 +31,17 @@ public class RegistrarServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
        
-
+	/**
+	 * Método doPost que se ejecuta al recibir una petición POST.
+	 * Este método se encarga de registrar un nuevo usuario en la base de datos.
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		User usuario = null;
 		UserDAO usuarioDAO = new UserAccess();
 		RequestDispatcher dispatcher = null;
-
+		
+		// Obtiene los datos del formulario de registro
 		String nombre = request.getParameter("nombre");
 		String apellido = request.getParameter("apellido");
 		String correo = request.getParameter("correo");
@@ -39,8 +49,11 @@ public class RegistrarServlet extends HttpServlet {
 		int operacion;
 		
 		try {
+			// Crea un nuevo usuario y lo guarda en la base de datos
 			usuario = new User(nombre,apellido,correo,contrasena,0.0);
 			operacion = usuarioDAO.guardar(usuario);
+			
+			// Si la operación fue exitosa, redirige al usuario a la página de inicio
 			if(operacion > 0) {
 				request.setAttribute("status", "success");
 				dispatcher = request.getRequestDispatcher("index.jsp");

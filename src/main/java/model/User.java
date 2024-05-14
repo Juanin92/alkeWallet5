@@ -1,5 +1,13 @@
 package model;
 
+/**
+ * Clase User que representa un usuario en el sistema.
+ * @param nombre Nombre del usuario.
+ * @param apellido Apellido del usuario.
+ * @param correo Correo electrónico del usuario.
+ * @param contrasena Contraseña del usuario.
+ * @param saldo Saldo del usuario.
+ */
 public class User {
 
 	private int id;
@@ -9,10 +17,11 @@ public class User {
 	private String contrasena;
 	private Double saldo;
 	
-	
+	//cosntructor por defecto
 	public User() {
 	}
-
+	
+	//constructor de la clase sin ID 
 	public User(String nombre, String apellido, String correo, String contrasena, Double saldo) {
 		this.nombre = nombre;
 		this.apellido = apellido;

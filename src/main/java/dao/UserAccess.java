@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import connection.*;
 import model.User;
 
+/**
+ * Clase que implementa la interfaz UserDAO.
+ * Esta clase se encarga de realizar las operaciones de base de datos para los usuarios.
+ */
 public class UserAccess implements UserDAO{
 	
 	private String sql = "";
@@ -15,11 +19,16 @@ public class UserAccess implements UserDAO{
 	private PreparedStatement pstm = null;
 	private ResultSet rs = null;
 	private User usuario = null;
-
+	
+	/**
+	 * Método para guardar un usuario en la base de datos.
+	 * @param usuario El usuario a guardar.
+	 * @return El número de filas afectadas.
+	 */
 	@Override
 	public int guardar(User usuario) {
 		int row = 0;
-		
+		// Consulta SQL para insertar un usuario
 		sql = "insert into usuarios(nombre,apellido,correo,contrasena,saldo) values (?,?,?,?,?)";
 
 		con = DBConnection.getConexion();
@@ -38,10 +47,17 @@ public class UserAccess implements UserDAO{
 		}
 		return row;
 	}
-
+	
+	/**
+	 * Método para depositar dinero en la cuenta de un usuario.
+	 * @param monto El monto a depositar.
+	 * @param usuarioID El ID del usuario.
+	 * @return El número de filas afectadas.
+	 */
 	@Override
 	public int depositar(Double monto, int usuarioID) {
 		int row = 0;
+		// Consulta SQL para actualizar el saldo de un usuario
 		sql = "UPDATE usuarios SET saldo = saldo + ? WHERE id = ?";
 		con = DBConnection.getConexion();
 		
@@ -57,7 +73,13 @@ public class UserAccess implements UserDAO{
 		}
 		return row;
 	}
-
+	
+	/**
+	 * Método para retirar dinero de la cuenta de un usuario.
+	 * @param monto El monto a retirar.
+	 * @param usuarioID El ID del usuario.
+	 * @return El número de filas afectadas.
+	 */
 	@Override
 	public int retirar(Double monto, int usuarioID) {
 		int row = 0;
@@ -76,7 +98,13 @@ public class UserAccess implements UserDAO{
 		}
 		return row;
 	}
-
+	
+	/**
+	 * Método para obtener un usuario de la base de datos por correo y contraseña.
+	 * @param correo El correo del usuario.
+	 * @param contrasena La contraseña del usuario.
+	 * @return El usuario obtenido.
+	 */
 	@Override
 	public User obtenerUsuario(String correo, String contrasena) {
 		sql = "select * from usuarios where correo = ? and contrasena = ?";
@@ -103,7 +131,11 @@ public class UserAccess implements UserDAO{
 		return usuario;
 	}
 
-
+	/**
+	 * Método para obtener un usuario de la base de datos por ID.
+	 * @param usuarioID El ID del usuario.
+	 * @return El usuario obtenido.
+	 */
 	@Override
 	public User obtenerUsuarioPorID(int usuarioID) {
 		sql = "select * from usuarios where id = ?";

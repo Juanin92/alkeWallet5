@@ -2,6 +2,9 @@ package dao;
 
 import model.User;
 
+/**
+ * Interfaz UserDAO que define los métodos que deben ser implementados para el acceso a datos de los usuarios.
+ */
 public interface UserDAO {
 
 	public int guardar(User usuario);
